@@ -37,7 +37,7 @@ Jika koneksi ke server REST API mengalami kendala atau *offline*, aplikasi secar
 ## 📸 Tampilan Aplikasi (Screenshots)
 
 <p align="center">
-  <img src="glazzy-showcase.jpg" width="800" alt="Glazzy Application Showcase">
+  <img src="glazzy-showcase.png" width="800" alt="Glazzy Application Showcase">
 </p>
 
 
