@@ -27,13 +27,6 @@ Aplikasi ini mengimplementasikan konsep-konsep fundamental dan lanjutan dalam pe
 *   **Penyimpanan Lokal:** Manajemen data lokal (Local Storage) untuk menangani fitur Bookmark dan Riwayat membaca pengguna.
 
 
-## 📸 Tampilan Aplikasi (Screenshots)
-
-<p align="center">
-  <img src="glazzy-showcase.png" width="800" alt="Glazzy Application Showcase">
-</p>
-
-
 ## ℹ️ Catatan Arsitektur & Aksesibilitas Data
 
 Aplikasi Glazzy awalnya dirancang untuk mengonsumsi data artikel secara *real-time* dari REST API platform utama di **glazzy.web.id**. Namun, untuk menjamin keberlanjutan portofolio ini dalam jangka panjang (antisipasi jika masa aktif *hosting* web utama berakhir), sistem telah dilengkapi dengan mekanisme **Local Fallback Data**.
