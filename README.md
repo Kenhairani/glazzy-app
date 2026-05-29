@@ -34,6 +34,13 @@ Aplikasi ini mengimplementasikan konsep-konsep fundamental dan lanjutan dalam pe
 </p>
 
 
+## ℹ️ Catatan Arsitektur & Aksesibilitas Data
+
+Aplikasi Glazzy awalnya dirancang untuk mengonsumsi data artikel secara *real-time* dari REST API platform utama di **glazzy.web.id**. Namun, untuk menjamin keberlanjutan portofolio ini dalam jangka panjang (antisipasi jika masa aktif *hosting* web utama berakhir), sistem telah dilengkapi dengan mekanisme **Local Fallback Data**.
+
+Jika koneksi ke server REST API mengalami kendala atau *offline*, aplikasi secara otomatis akan mengalihkan sumber data ke penyimpanan cadangan lokal (`assets/artikel_backup.json`). Hal ini memastikan seluruh komponen UI seperti halaman Home, filter kategori, dan fitur Search tetap dapat diuji dan berfungsi dengan normal selamanya.
+
+
 ## 👨‍💻 Kontributor
 
 Proyek ini dikembangkan sebagai Project Akhir oleh:
