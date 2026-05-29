@@ -34,6 +34,13 @@ Aplikasi Glazzy awalnya dirancang untuk mengonsumsi data artikel secara *real-ti
 Jika koneksi ke server REST API mengalami kendala atau *offline*, aplikasi secara otomatis akan mengalihkan sumber data ke penyimpanan cadangan lokal (`assets/artikel_backup.json`). Hal ini memastikan seluruh komponen UI seperti halaman Home, filter kategori, dan fitur Search tetap dapat diuji dan berfungsi dengan normal selamanya.
 
 
+## 📸 Tampilan Aplikasi (Screenshots)
+
+<p align="center">
+  <img src="glazzy-showcase.jpg" width="800" alt="Glazzy Application Showcase">
+</p>
+
+
 ## 👨‍💻 Kontributor
 
 Proyek ini dikembangkan sebagai Project Akhir oleh:
