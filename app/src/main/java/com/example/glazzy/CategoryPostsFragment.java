@@ -19,6 +19,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
 
@@ -86,7 +87,7 @@ public class CategoryPostsFragment extends Fragment {
             intent.putExtra("excerpt", post.excerpt != null ? post.excerpt : "");
             startActivity(intent);
         });
-        postAdapter.setShowDate(true); // beranda tidak perlu tanggal
+        postAdapter.setShowDate(true);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -106,7 +107,7 @@ public class CategoryPostsFragment extends Fragment {
         });
 
         swipeRefresh.setColorSchemeResources(R.color.primary);
-        swipeRefresh.setOnRefreshListener(this::refreshPosts); // Tarik ke bawah untuk refresh
+        swipeRefresh.setOnRefreshListener(this::refreshPosts);
 
         fetchPosts(true); // Load halaman pertama saat fragment dibuka
         return view;
@@ -171,6 +172,9 @@ public class CategoryPostsFragment extends Fragment {
 
     // Ambil data postingan dari WordPress REST API menggunakan Volley
     void fetchPosts(boolean isFirstPage) {
+        loadFromBackup();
+        if (true) return;
+
         if (isLoading || !hasMore) return;
         isLoading = true;
 
@@ -256,17 +260,72 @@ public class CategoryPostsFragment extends Fragment {
                     hideShimmer();
                     if (swipeRefresh != null) swipeRefresh.setRefreshing(false);
                     isLoading = false;
+                    // Kalau gagal dan list masih kosong → load dari backup lokal
                     if (postList.isEmpty() && getContext() != null) {
-                        Toast.makeText(getContext(),
-                                "Failed to load articles. Pull down to retry.",
-                                Toast.LENGTH_SHORT).show();
-                        updateEmptyState(true);
+                        loadFromBackup();
                     }
                 }
         );
 
         request.setRetryPolicy(new DefaultRetryPolicy(15000, 1, 1.0f)); // Timeout 15 detik
         requestQueue.add(request);
+    }
+
+    // Baca file JSON dari folder assets
+    private String loadJSONFromAssets(String fileName) {
+        try {
+            java.io.InputStream is = requireContext().getAssets().open(fileName);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            return new String(buffer, "UTF-8");
+        } catch (java.io.IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    // Load artikel dari file backup lokal saat API tidak bisa diakses
+    void loadFromBackup() {
+        try {
+            String json = loadJSONFromAssets("artikel_backup.json");
+            if (json == null) return;
+
+            JSONArray array = new JSONArray(json);
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject obj = array.getJSONObject(i);
+                String title   = obj.getJSONObject("title").getString("rendered");
+                String content = obj.getJSONObject("content").getString("rendered");
+                String excerpt = obj.getJSONObject("excerpt").getString("rendered");
+                String link    = obj.optString("link", "");
+                String date    = obj.optString("date", "");
+
+                String imageUrl = "";
+                if (obj.has("_embedded")) {
+                    JSONObject embedded = obj.getJSONObject("_embedded");
+                    if (embedded.has("wp:featuredmedia")) {
+                        imageUrl = embedded.getJSONArray("wp:featuredmedia")
+                                .getJSONObject(0)
+                                .optString("source_url", "");
+                    }
+                }
+
+                PostModel post = new PostModel(title, content, excerpt, imageUrl);
+                post.link = link;
+                post.date = date;
+                postList.add(post);
+            }
+
+            filteredList.clear();
+            filteredList.addAll(postList);
+            if (postAdapter != null) postAdapter.notifyDataSetChanged();
+            updateEmptyState(filteredList.isEmpty());
+
+        } catch (Exception e) {
+            Log.e("GLAZZY", "Backup error: " + e.getMessage());
+            updateEmptyState(true);
+        }
     }
 
     // Batalkan semua request Volley saat fragment dihancurkan (cegah memory leak)
