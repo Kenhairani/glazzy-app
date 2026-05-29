@@ -15,7 +15,6 @@ Aplikasi Glazzy dilengkapi dengan berbagai fitur interaktif untuk memudahkan pen
 *   **Fitur Share** – Memudahkan pengguna untuk membagikan tautan artikel kacamata kepada orang lain melalui aplikasi pihak ketiga.
 *   **Halaman About Glazzy** – Informasi mengenai aplikasi yang dapat diakses secara unik hanya dengan menekan logo Glazzy di halaman Home.
 
----
 
 ## 🛠️ Tech Stack & Komponen Android
 
@@ -27,7 +26,13 @@ Aplikasi ini mengimplementasikan konsep-konsep fundamental dan lanjutan dalam pe
 *   **Koneksi Jaringan:** Pengambilan data artikel secara dinamis dari REST API
 *   **Penyimpanan Lokal:** Manajemen data lokal (Local Storage) untuk menangani fitur Bookmark dan Riwayat membaca pengguna.
 
----
+
+## 📸 Tampilan Aplikasi (Screenshots)
+
+<p align="center">
+  <img src="glazzy-showcase.png" width="800" alt="Glazzy Application Showcase">
+</p>
+
 
 ## 👨‍💻 Kontributor
 
