@@ -172,9 +172,6 @@ public class CategoryPostsFragment extends Fragment {
 
     // Ambil data postingan dari WordPress REST API menggunakan Volley
     void fetchPosts(boolean isFirstPage) {
-        loadFromBackup();
-        if (true) return;
-
         if (isLoading || !hasMore) return;
         isLoading = true;
 
