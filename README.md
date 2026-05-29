@@ -43,6 +43,6 @@ Jika koneksi ke server REST API mengalami kendala atau *offline*, aplikasi secar
 
 ## 👨‍💻 Kontributor
 
-Proyek ini dikembangkan sebagai Project Akhir oleh:
+Proyek ini dikembangkan sebagai Project Akhir mata kuliah Pengembangan Berbasis Platform oleh:
 *   **Kenhairani Baeha**
 *   **T. Syarifah Gita Azzahra**
